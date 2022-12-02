@@ -1,3 +1,4 @@
+Kandidatnr:1047.
 
 ## Del 1 DevOps-prinsipper
 
@@ -37,13 +38,37 @@ at
 
 ### Oppgave 1
 Beskriv hva du må gjøre for å få workflow til å fungere med din DockerHub konto? Hvorfor feiler workflowen?
+
   Workflowen feiler fordi den mangler token fra dockerhub, for at den skal fungere må man sette DOCKER_HUB_TOKEN og 
   DOCKER_HUB_USERNAME i ```Action secrets```. DOCKER_HUB_TOKEN kan skaffes fra dockerhub settings. 
 
 ### Oppave 3
 * Beskriv deretter med egne ord hva sensor må gjøre for å få sin fork til å laste opp container image til sitt eget ECR repo.
-* Docker workflow skal pushe et container image med en tag som er lik GitHub commit hash (id); for eksempel ```244530008913.dkr.ecr.eu-west-1.amazonaws.com/glenn_exam_practice:8234efc```
 
+  Sensor må først bytte kodene i github secrets. I github secrets ligger det mine nøkler. Slett mine AWS nøkler, 
+  og legg en AWS_ACCESS_KEY_ID med access key. Så en AWS_SECRET_ACCESS_KEY med secret access key som kan skaffes fra IAM.
+
+  I workflow docker.yml kan sensor endre følgende kommandoer for å kunne laste opp container image til sitt eget ECR repo:
+```sh
+  aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin <Account ID>.dkr.ecr.<region&zone>.amazonaws.com
+  rev=$(git rev-parse --short HEAD)  #<- henter siste commit hash (id)
+  docker build . -t shopifly
+  docker tag shopifly <Account ID>.dkr.ecr.<region&zone>.amazonaws.com/<ECR repo navn>:$rev
+  docker push <Account ID>.dkr.ecr.<region&zone>.amazonaws.com/<ECR repo navn>:$rev
+```
+  Ved å bruke $rev legges den siste commit fra github som versjon i container image.
+
+På oppgave 3, er jeg usikker om det er ment for workflow eller direkte fra terminal. 
+Derfor tar jeg med en eksemepel fra terminal også, kjør følgende kommando for å bygge en container image i din maskin.
+```sh
+docker build -t shopifly:<velg versjon> .
+```
+Bruk først docker login til å autentisere docker mot AWS ECR, også push ønskende versjon, kjør følgende kommandoer:
+```sh
+aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin <Account ID>.dkr.ecr.<region&zone>.amazonaws.com
+docker tag shopifly:<versjon> <Account ID>.dkr.ecr.<region&zone>.amazonaws.com/<ECR repo navn>:<versjon>
+docker push 244530008913.dkr.ecr.eu-west-1.amazonaws.com/<ECR repo navn>:<versjon>
+```
 
 ## Del 5 - Terraform og CloudWatch Dashboards
 
