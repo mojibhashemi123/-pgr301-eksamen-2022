@@ -37,7 +37,7 @@ at
 ## Del 3 - Docker
 
 ### Oppgave 1
-Beskriv hva du må gjøre for å få workflow til å fungere med din DockerHub konto? Hvorfor feiler workflowen?
+* Beskriv hva du må gjøre for å få workflow til å fungere med din DockerHub konto? Hvorfor feiler workflowen?
 
   Workflowen feiler fordi den mangler token fra dockerhub, for at den skal fungere må man sette DOCKER_HUB_TOKEN og 
   DOCKER_HUB_USERNAME i ```Action secrets```. DOCKER_HUB_TOKEN kan skaffes fra dockerhub settings. 
@@ -74,6 +74,14 @@ docker push 244530008913.dkr.ecr.eu-west-1.amazonaws.com/<ECR repo navn>:<versjo
 
 ### Oppgave 1
 * Forklar med egne ord. Hva er årsaken til dette problemet? Hvorfor forsøker Terraform å opprette en bucket, når den allerede eksisterer? 
-
+  
+  Mangel på backend av state fila til Terraform. terraform-state fila er imidlertid lagret på lokale maskin, fordi hvis 
+  vi distribuerer noe gjennom terraform, vil vi se at terraform oppretter en torreform.tfstate-fil, og dette er hvordan 
+  terraform administrerer tilstanden sin, så denne tilstandsfilen kommer til å holde styr på alle ressursene vi har 
+  distribuert til AWS eller andre skyleverandører som bruker terraform. Terraform trenger å ha denne informasjonen, så 
+  hvis vi senere bestemmer oss for å enten slette en ressurs eller endre en ressurs, må den vite hvilken ressurs som 
+  faktisk skal slettes eller endres. Det er som hukommelse. GitHub action må ha tilgang til terraform-konfigurasjonene 
+  og koden slik at den bruker samme terraform-filene. Når Github ikke har tilgang til tilstandsfilen så vet den ikke om 
+  den allerede eksisterer derfor forsøker den å opprette bucket igjen.
 
 
