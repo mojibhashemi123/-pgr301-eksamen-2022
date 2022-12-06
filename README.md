@@ -84,4 +84,10 @@ docker push 244530008913.dkr.ecr.eu-west-1.amazonaws.com/<ECR repo navn>:<versjo
   og koden slik at den bruker samme terraform-filene. Når Github ikke har tilgang til tilstandsfilen så vet den ikke om 
   den allerede eksisterer derfor forsøker den å opprette bucket igjen.
 
+  For fikse det probleme trenger jeg å lage s3 bucket ved hjelp av terminal, først ```terraform init``` og ```terraform apply``` 
+  uten backend i provide.tf fila slik at jeg får state filen på lokalt, deretter kan jeg kjøre ```terraform init``` med 
+  backend i provider.tf fila. Vi får da en advarsel som sier i utgangspunktet bruker lokal stat og om du vil flytte til en s3 backend, 
+  så må jeg bekrefte med å skrive "yes", på dette tidspunktet blir terraform backend distribuert og får terraform.state fila lagret i s3 bucket.
+
+
 
