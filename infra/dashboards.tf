@@ -44,15 +44,15 @@ resource "aws_cloudwatch_dashboard" "main" {
     },
     {
       "type": "metric",
-      "x": 1,
-      "y": 1,
+      "x": 0,
+      "y": 0,
       "width": 12,
       "height": 6,
       "properties": {
         "metrics": [
           [
             "${var.candidate_id}",
-            "checkouts.value"
+            "checkouts.count"
           ]
         ],
         "period": 300,
@@ -63,8 +63,8 @@ resource "aws_cloudwatch_dashboard" "main" {
     },
     {
       "type": "metric",
-      "x": 1,
-      "y": 1,
+      "x": 0,
+      "y": 0,
       "width": 12,
       "height": 6,
       "properties": {
