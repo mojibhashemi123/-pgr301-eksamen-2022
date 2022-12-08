@@ -1,14 +1,14 @@
 
 resource "aws_cloudwatch_metric_alarm" "alarmhandlekurv" {
-  alarm_name                = "bank-sum-formetriks"
+  alarm_name                = "cart-count-formetriks"
   namespace                 = "alarm-topic-${var.candidate_id}"
   metric_name               = "cart_count.value"
 
   comparison_operator       = "GreaterThanThreshold"
   threshold                 = "5"
-  evaluation_periods        = "120"
-  datapoints_to_alarm       = "3"
-  period                    = "300"
+  evaluation_periods        = "2"
+  //datapoints_to_alarm       = ""
+  period                    = "60"
 
   statistic                 = "Maximum"
 
