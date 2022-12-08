@@ -56,7 +56,7 @@ resource "aws_cloudwatch_dashboard" "main" {
           ]
         ],
         "period": 3600,
-        "stat": "Maximum",
+        "stat": "Sum",
         "region": "eu-west-1",
         "title": "Totalt antall handlevogner er blitt sjekket ut"
       }
@@ -71,11 +71,11 @@ resource "aws_cloudwatch_dashboard" "main" {
         "metrics": [
           [
             "${var.candidate_id}",
-            "checkout_latency.count"
+            "checkout_latency.avg"
           ]
         ],
-        "period": 300,
-        "stat": "Average",
+        "period": 180,
+        "stat": "Maximum",
         "region": "eu-west-1",
         "title": "Gjennomsnittlig responstid for Checkout metoden i Controller-klassen."
       }

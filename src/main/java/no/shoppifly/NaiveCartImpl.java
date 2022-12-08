@@ -26,13 +26,14 @@ class NaiveCartImpl implements CartService {
     @Override
     public String checkout(Cart cart) {
         shoppingCarts.remove(cart.getId());
-        return UUID.randomUUID().toString();
+        return cart.getId().toString();
     }
 
     @Override
     public List<String> getAllsCarts() {
         return new ArrayList<>(shoppingCarts.keySet());
     }
+
 
     // @author Jim; I'm so proud of this one, took me one week to figure out !!!
     public float total() {
@@ -41,4 +42,6 @@ class NaiveCartImpl implements CartService {
                         .map(i -> i.getUnitPrice() * i.getQty()))
                 .reduce(0f, Float::sum);
     }
+
+
 }
