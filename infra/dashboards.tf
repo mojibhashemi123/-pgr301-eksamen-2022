@@ -74,7 +74,7 @@ resource "aws_cloudwatch_dashboard" "main" {
             "checkout_latency.avg"
           ]
         ],
-        "period": 180,
+        "period": 300,
         "stat": "Maximum",
         "region": "eu-west-1",
         "title": "Gjennomsnittlig responstid for Checkout metoden i Controller-klassen."
