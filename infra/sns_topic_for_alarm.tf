@@ -1,7 +1,7 @@
 
 resource "aws_cloudwatch_metric_alarm" "alarmhandlekurv" {
   alarm_name                = "cart-count-formetriks"
-  namespace                 = "alarm-topic-${var.candidate_id}"
+  namespace                 = var.candidate_id
   metric_name               = "cart_count.value"
 
   comparison_operator       = "GreaterThanThreshold"
