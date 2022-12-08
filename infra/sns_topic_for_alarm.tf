@@ -7,7 +7,7 @@ resource "aws_cloudwatch_metric_alarm" "alarmhandlekurv" {
   comparison_operator       = "GreaterThanThreshold"
   threshold                 = "5"
   evaluation_periods        = "5"
-  //datapoints_to_alarm       = ""
+  //datapoints_to_alarm       = ""/
   period                    = "60"
 
   statistic                 = "Maximum"
